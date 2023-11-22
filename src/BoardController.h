@@ -1,5 +1,5 @@
-#ifndef _BOARDCONTROLLER_H
-#define _BOARDCONTROLLER_H
+#ifndef BOARD_CONTROLLER_H
+#define BOARD_CONTROLLER_H
 #include "DeviceController.h"
 #include "logger.h"
 #include "ApiClient.h"

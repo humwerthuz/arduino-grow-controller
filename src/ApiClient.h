@@ -1,5 +1,5 @@
-#ifndef APICLIENT_H
-#define APICLIENT_H
+#ifndef API_CLIENT_H
+#define API_CLIENT_H
 
 #include <HTTPClient.h>
 #include <WiFiClientSecure.h>
@@ -7,17 +7,17 @@
 
 class APIClient {
 	private:
-		String _endpoint;
-		String _host;
-		String _apiKey;
-		WiFiClientSecure *_wifiClient;
+		const char* endpoint;
+		const char* host;
+		const char* apiKey;
+		WiFiClientSecure *wifiClient;
 		HTTPClient *httpClient;
 	public:
-		Logger *logger;
-		APIClient(String,String,String);
-		int send(char*);
+		Logger *logger{};
+		APIClient(const char*,const char*,const char*);
+		int send(const char*);
 		void setLogger(Logger*);
 
 };
 
-#endif /* APICLIENT_H */
+#endif /* API_CLIENT_H */

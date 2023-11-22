@@ -2,16 +2,16 @@
 
 BoardController::BoardController() {
   currentDeviceCount = 0;
-  apiSink = NULL;
+  apiSink = nullptr;
 }
 
-int BoardController::registerController(DeviceController *ctrlr) {
+int BoardController::registerController(DeviceController *controller) {
   if ( currentDeviceCount >= MAX_DEVICES ) {
     return -1;
   }
-  registeredControllers[currentDeviceCount] = ctrlr;
+  registeredControllers[currentDeviceCount] = controller;
 
-  if (this->apiSink != NULL) {
+  if (this->apiSink != nullptr) {
     registeredControllers[currentDeviceCount]->setApiSink(this->apiSink);
   }
 
@@ -19,16 +19,16 @@ int BoardController::registerController(DeviceController *ctrlr) {
 }
 
 void BoardController::tick(){
-  char buff[32];
-  for(int i = 0; i <= (currentDeviceCount - 1); i++){
-    snprintf(buff, sizeof(buff), "ticking device # %d", i);
-    logger->logDebug(buff);
-    registeredControllers[i]->tick();
-  }
+    std::string buff;
+    for(int i = 0; i <= (currentDeviceCount - 1); i++){
+        buff = "ticking device #" + std::to_string(i);
+        logger->logDebug(buff.c_str());
+        registeredControllers[i]->tick();
+    }
 }
 
-void BoardController::setLogger(Logger *logger) {
-  this->logger = logger;
+void BoardController::setLogger(Logger *l) {
+  this->logger = l;
 }
 
 void BoardController::setApiSink(APIClient *sink) {
