@@ -70,7 +70,7 @@ void setup(){
 
   // setup network stuff
   WiFi.mode(WIFI_STA);
-  WiFi.begin("harc157", "paralelepipedo");
+  WiFi.begin(WIFI_NAME, WIFI_PASSWORD);
 
   logger.logInfo("Waiting for WiFi to connect.");
   while ((WiFi.status() != WL_CONNECTED)) {
