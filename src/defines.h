@@ -33,6 +33,7 @@
   #define TEMPERATURE_STRING_BYTES 6
 #endif /* TEMPERATURE_PRECISION == TEMP_PRECISION_12 */
 
+#define TEMP_PROBE_MAIN 0
 
 // API
 #include "protected.h"

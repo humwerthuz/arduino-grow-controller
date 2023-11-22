@@ -13,6 +13,9 @@ extern char const *TagOff;
 extern char const *TagRelayEvent;
 
 
+// Temperature probes
+extern const uint8_t TemperatureProbeAddresses[][8];
+
 // SSL Certs
 extern const char* google_apis_root_ca;
 

@@ -1,6 +1,7 @@
 //
 // Created by hrojasc on 11/22/2023.
 //
+#include <cstdint>
 #include "constants.h"
 
 char const *TagTemperatureEvent = "temp_reading";
@@ -8,6 +9,12 @@ char const *TagFanEvent = "fan_event";
 char const *TagOn = "on";
 char const *TagOff = "off";
 char const *TagRelayEvent = "relay_event";
+
+// Temperature Probes
+// Temp Probes
+const uint8_t TemperatureProbeAddresses[][8] = {
+        {0x28, 0x58, 0xB8, 0x14, 0x00, 0x00, 0x00, 0xD6} //28 58 B8 14 00 00 00 D6
+};
 
 
 // SSL Certs

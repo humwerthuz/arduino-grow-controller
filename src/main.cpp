@@ -10,6 +10,7 @@
 #include "CO2Controller.h"
 #include "TimedRelayController.h"
 #include "ApiClient.h"
+#include "constants.h"
 
 // Clock
 DS3231  rtcClock(Wire);
@@ -23,15 +24,12 @@ FanController fan1Control = FanController(PIN_FAN_RELAY1, "Fan1");
 CO2Controller co2Control = CO2Controller(PIN_MZH19_TX, PIN_MZH19_RX, MZH19_ASSIGNED_UART_NR, CO2_RELAY_PIN);
 TimedRelayController timedRelayControl = TimedRelayController(TIMED_RELAY_PIN, &rtcClock);
 
-// Temp Probes
-uint8_t TemperatureProbeAddresses[][8] = {
-  {0x28, 0x58, 0xB8, 0x14, 0x00, 0x00, 0x00, 0xD6} //28 58 B8 14 00 00 00 D6
-};
+
 OneWire ds18Wire(PIN_DS18);
 DallasTemperature ds18probes(&ds18Wire);
 
 // Network Stuff
-APIClient apicli(API_HOST, API_ENDPOINT, API_KEY);
+APIClient apiClient(API_HOST, API_ENDPOINT, API_KEY);
 
 void setup(){
   Serial.begin(115200);
@@ -46,7 +44,7 @@ void setup(){
 
   //Fan
   fan1Control.setLogger(&logger);
-  fan1Control.setTemperatureProbe(&ds18probes, TemperatureProbeAddresses[0]);
+  fan1Control.setTemperatureProbe(&ds18probes, TemperatureProbeAddresses[TEMP_PROBE_MAIN]);
   fan1Control.setTemperatureRange(28, 26);
 
   //CO2
@@ -60,10 +58,10 @@ void setup(){
   timedRelayControl.setStopTime(12, 00);
 
   //BoardController
-  apicli.setLogger(&logger);
+  apiClient.setLogger(&logger);
   boardController.setLogger(&logger);
   // First set api sink, so boardcontroller can inject this value into each device
-  boardController.setApiSink(&apicli);
+  boardController.setApiSink(&apiClient);
   boardController.registerController(&fan1Control);
   boardController.registerController(&co2Control);
   boardController.registerController(&timedRelayControl);
