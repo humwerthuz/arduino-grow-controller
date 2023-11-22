@@ -39,7 +39,7 @@ void FanController::tick(){
   }
 }
 
-void FanController::setTemperatureProbe(DallasTemperature *ds18, uint8_t *address) {
+void FanController::setTemperatureProbe(DallasTemperature *ds18, const uint8_t *address) {
   this->ds18instance = ds18;
   this->ds18address = address;
 }

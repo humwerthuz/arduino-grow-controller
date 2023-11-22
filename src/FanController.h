@@ -12,11 +12,11 @@ class FanController : public DeviceController {
     float startTemp;
     float stopTemp;
     DallasTemperature *ds18instance;
-    uint8_t *ds18address{};
+    const uint8_t *ds18address{};
     uint8_t lastState;
   public:
     FanController(int,const char*);
-    void setTemperatureProbe(DallasTemperature *, uint8_t*);
+    void setTemperatureProbe(DallasTemperature *, const uint8_t*);
     void setTemperatureRange(float, float);
     void tick() override;
 };

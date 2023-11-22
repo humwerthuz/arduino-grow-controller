@@ -17,8 +17,8 @@ void CO2Controller::init(){
         return;
     }
     this->serialPort->begin(ZH_BAUDRATE, SERIAL_8N1, this->rxPin, this->txPin, false, 20000UL);
-	this->mhz19->begin(*this->serialPort);
-	this->mhz19->autoCalibration(false);
+    this->mhz19->begin(*this->serialPort);
+    this->mhz19->autoCalibration(false);
     this->initialized = true;
 }
 
