@@ -66,7 +66,7 @@ void setup(){
   boardController.setApiSink(&apicli);
   boardController.registerController(&fan1Control);
   boardController.registerController(&co2Control);
-  //boardController.registerController(&timedRelayControl);
+  boardController.registerController(&timedRelayControl);
 
   // setup network stuff
   WiFi.mode(WIFI_STA);
