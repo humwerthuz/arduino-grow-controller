@@ -34,7 +34,5 @@
 
 
 // API
-#define API_ENDPOINT  "https://snoopie-edge-aclwzeqo.uc.gateway.dev/snoopieEdgeSink"
-#define API_HOST      "snoopie-edge-aclwzeqo.uc.gateway.dev"
-#define API_KEY       "AIzaSyD4gdh_fLb-J_Pom0faFVrNVCZMPZ5hTtM"
+#include "protected.h"
 #endif
