@@ -20,7 +20,7 @@ Logger logger = Logger(&Serial, &rtcClock);
 // Controllers
 BoardController boardController = BoardController();
 FanController fan1Control = FanController(PIN_FAN_RELAY1, "Fan1");
-CO2Controller co2Control = CO2Controller(PIN_MZH19_TX, PIN_MZH19_RX, CO2_RELAY_PIN);
+CO2Controller co2Control = CO2Controller(PIN_MZH19_TX, PIN_MZH19_RX, MZH19_ASSIGNED_UART_NR, CO2_RELAY_PIN);
 TimedRelayController timedRelayControl = TimedRelayController(TIMED_RELAY_PIN, &rtcClock);
 
 // Temp Probes

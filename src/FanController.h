@@ -1,5 +1,5 @@
-#ifndef _FANCONTROLLER_H
-#define _FANCONTROLLER_H
+#ifndef FAN_CONTROLLER_H
+#define FAN_CONTROLLER_H
 #include "DeviceController.h"
 #include <DallasTemperature.h>
 #include <OneWire.h>
@@ -8,17 +8,17 @@
 
 class FanController : public DeviceController {
   private:
-    int _fanControlPin;
-    float _startTemp;
-    float _stopTemp;
-    DallasTemperature *_ds18;
-    uint8_t *_address;
-    uint8_t _lastState;
+    int fanControlPin;
+    float startTemp;
+    float stopTemp;
+    DallasTemperature *ds18instance;
+    uint8_t *ds18address{};
+    uint8_t lastState;
   public:
-    FanController(int, char*);
+    FanController(int,const char*);
     void setTemperatureProbe(DallasTemperature *, uint8_t*);
     void setTemperatureRange(float, float);
-    void tick();
+    void tick() override;
 };
 
 #endif

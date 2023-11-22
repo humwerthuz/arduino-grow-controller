@@ -1,50 +1,45 @@
 #include "FanController.h"
+#include "constants.h"
 
-FanController::FanController(int fanControllPin, char *name) {
-    this->setDeviceName(name);
-    this->_fanControlPin = fanControllPin;
-    this->_stopTemp = 0;
-    this->_startTemp = 0;
-    // Ensure pin is in output mode
-    pinMode(this->_fanControlPin, OUTPUT);
-    // Start off
-    this->_lastState = LOW;
-    digitalWrite(this->_fanControlPin, this->_lastState);
+FanController::FanController(int fcPin, const char *name) {
+    setDeviceName(name);
+    ds18instance = nullptr;
+    ds18address = nullptr;
+    fanControlPin = fcPin;
+    stopTemp = 0;
+    startTemp = 0;
+    lastState = LOW;
+    pinMode(fanControlPin, OUTPUT);
+    digitalWrite(fanControlPin, lastState);
 }
 
-void FanController::setTemperatureRange(float startTemp, float stopTemp) {
-  this->_startTemp = startTemp;
-  this->_stopTemp = stopTemp;
+void FanController::setTemperatureRange(float start, float stop) {
+  this->startTemp = start;
+  this->stopTemp = stop;
 }
 
 void FanController::tick(){
-  this->_ds18->requestTemperaturesByAddress(this->_address);
-
-  float actualTemp = this->_ds18->getTempC(this->_address);
-  
-
-  if (this->logger != NULL) {  
-    char logBuff[64];
-    snprintf(logBuff, sizeof(logBuff), "Device %s got temperature %f", this->getDeviceName(), actualTemp);
-    logger->logInfo(logBuff);
+  this->ds18instance->requestTemperaturesByAddress(this->ds18address);
+  float actualTemp = this->ds18instance->getTempC(this->ds18address);
+  if (this->logger != nullptr) {
+    std::string logBuff = "Device " + std::string(this->getDeviceName()) + " got temperature " + std::to_string(actualTemp);
+    logger->logInfo(logBuff.c_str());
   }
 
-  char buff[TEMPERATURE_STRING_BYTES];
-  snprintf(buff, sizeof(buff), "%f", actualTemp);
-  this->sinkData("temp_reading", buff, this->getDeviceName());
+  this->sinkData(TagTemperatureEvent, std::to_string(actualTemp).c_str(), this->getDeviceName());
 
-  if ( actualTemp >= this->_startTemp && this->_lastState != HIGH) {
-    this->_lastState = HIGH;
-    digitalWrite(this->_fanControlPin, this->_lastState);
-    this->sinkData("fan_event", "on", this->getDeviceName());
-  } else if ( actualTemp <= this->_stopTemp && this->_lastState != LOW) {
-    this->_lastState = LOW;
-    digitalWrite(this->_fanControlPin,  this->_lastState);
-   this->sinkData("fan_event", "off", this->getDeviceName());
+  if ( actualTemp >= this->startTemp && this->lastState != HIGH) {
+    this->lastState = HIGH;
+    digitalWrite(this->fanControlPin, this->lastState);
+    this->sinkData(TagFanEvent, TagOn, this->getDeviceName());
+  } else if ( actualTemp <= this->stopTemp && this->lastState != LOW) {
+    this->lastState = LOW;
+    digitalWrite(this->fanControlPin, this->lastState);
+   this->sinkData(TagFanEvent, TagOff, this->getDeviceName());
   }
 }
 
 void FanController::setTemperatureProbe(DallasTemperature *ds18, uint8_t *address) {
-  this->_ds18 = ds18;
-  this->_address = address;
+  this->ds18instance = ds18;
+  this->ds18address = address;
 }

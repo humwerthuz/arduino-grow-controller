@@ -1,5 +1,5 @@
-#ifndef _MDEFINES
-#define _MDEFINES
+#ifndef DEFINES_H
+#define DEFINES_H
 
 // PinOut
 #define PIN_DS18 13
@@ -14,6 +14,7 @@
 // new pinout using rs232 interface
 #define PIN_MZH19_RX 16
 #define PIN_MZH19_TX 17
+#define MZH19_ASSIGNED_UART_NR 1
 
 #define CO2_RELAY_PIN 5
 #define TIMED_RELAY_PIN 15

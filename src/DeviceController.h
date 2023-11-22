@@ -1,19 +1,19 @@
-#ifndef DEVICECONTROLLER_H
-#define DEVICECONTROLLER_H
+#ifndef DEVICE_CONTROLLER_H
+#define DEVICE_CONTROLLER_H
 #include "logger.h"
 #include "ApiClient.h"
 
 class DeviceController {
   private:
-    char *_deviceName;
+    const char *deviceName{};
   public:
-    Logger *logger;
-    APIClient *apiSink;
+    Logger *logger{};
+    APIClient *apiSink{};
     virtual void tick();
-    char *getDeviceName();
-    void setDeviceName(char*);
+    const char *getDeviceName();
+    void setDeviceName(const char*);
     void setLogger(Logger*);
     void setApiSink(APIClient*);
-    void sinkData(char*, char*, char*); // char *event_type, char *event_value, cahr* event_location
+    void sinkData(const char*, const char*, const char*) const;
 };
 #endif
